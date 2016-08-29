@@ -1,5 +1,3 @@
-require_relative 'soda'
-
 class SodaMachine
   attr_reader :sodas, :cash
 
@@ -13,13 +11,18 @@ class SodaMachine
   end
 
   def find_soda(soda_brand)
-    sodas.find { soda_brand }
+    sodas.find { |soda| soda.brand == soda_brand ? soda : nil }
   end
 
   def sell(soda_brand)
-
-    p sodas.delete(soda_brand)
-    cash += sodas
+    found_soda = find_soda(soda_brand)
+    if found_soda
+      @cash += found_soda.price
+      sodas.delete_if { |soda| soda == found_soda }
+    end
   end
 
+
 end
+
+
